@@ -38,6 +38,8 @@ Install
 Usage
 =====
 
+Must have `project.json <https://github.com/urban48/debpackager/wiki/conventions-and-usage#projectjson>`_ at your project root directory`
+
 **build**
 
 .. code-block:: shell
