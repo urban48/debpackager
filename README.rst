@@ -14,10 +14,17 @@ Main Features:
  * Greatly simplifies the packaging and deployment process. 
  * Package version management in SemVer standard (http://semver.org/) 
 
+What dose it do
+===============
+Creates only debian binary packages right now.
+Do not really follow Debian packaging policy or all the packaging guidelines.
+Provides an easy way to configure, manage and create a deb package that can be deployed
+on Linux.
+
+
 Requirements
 ============
-
-* Python 2.7
+* Python >=2.7
 * Works on Linux
 
 Dependencies
