@@ -4,11 +4,11 @@ import logging
 import argparse
 from logging.config import dictConfig
 
-from utils.general import run_command
+from debpackager.utils.general import run_command
 from debpackager.utils.pom import Pom
 from debpackager.conf.log_conf import LOG_CONF
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 logger = logging.getLogger(__name__)
 

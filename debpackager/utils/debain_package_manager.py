@@ -123,8 +123,8 @@ class Dpm(object):
         if not os.path.exists(self.deb_setting_dir):
             return
 
-        upstart = filter(lambda x: '.upstart' in x, os.listdir(
-            self.deb_setting_dir))
+        upstart = list(filter(lambda x: '.upstart' in x, os.listdir(
+            self.deb_setting_dir)))
         if upstart:
             shutil.copy(os.path.join(self.deb_setting_dir, upstart[0]),
                         os.path.join(self.debian_package_path,
@@ -132,8 +132,8 @@ class Dpm(object):
                                      upstart[0]))
             return
 
-        initd = filter(lambda x: '.init' in x, os.listdir(
-            self.deb_setting_dir))
+        initd = list(filter(lambda x: '.init' in x, os.listdir(
+            self.deb_setting_dir)))
         if initd:
             shutil.copy(os.path.join(self.deb_setting_dir, initd[0]),
                         os.path.join(self.debian_package_path,
