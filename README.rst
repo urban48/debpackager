@@ -32,22 +32,6 @@ Install
 Usage
 =====
 
-**start new project:** (only python supported right now)
-
-.. code-block:: shell
-
-    usage: debpackager --init [-h] [-p] project_name project_type
-
-    positional arguments:
-      project_name  supply project name
-      project_type  supply project type
-
-   optional arguments:
-      -h, --help    show this help message and exit
-      -p , --path   set path to the project, default: current location
-
-
-
 **build**
 
 .. code-block:: shell
