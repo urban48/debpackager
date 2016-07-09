@@ -2,11 +2,17 @@ Overview
 ========
 
 debpackager is a cli tool used for creating debain packages
+inspired by `fpm <https://github.com/jordansissel/fpm>`_ and `maven <https://maven.apache.org/i>`_
 
 Main Features:
- * project creation template (only python supported atm)
- * Provides easy control over project packaging process 
- * Version management in SemVer standard (http://semver.org/)  
+
+ * Provides easy control over project packaging process using configuration     
+   file called project.json (like pom.xml in maven)
+ * Easy addition of new packing policies for different project types and languages
+ * Solves the problem of python projects need debian dependencies to run.  
+ * Making your code a Linux compatible daemon with just few simple steps
+ * Greatly simplifies the packaging and deployment process. 
+ * Package version management in SemVer standard (http://semver.org/) 
 
 Requirements
 ============
