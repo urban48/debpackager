@@ -105,8 +105,8 @@ class Dpm(object):
         if not os.path.exists(self.deb_setting_dir):
             return
         # get all custom maintainer scripts, files that don't have '.' in name
-        mscripts = filter(lambda x: '.' not in x, os.listdir(
-            self.deb_setting_dir))
+        mscripts = list(filter(lambda x: '.' not in x, os.listdir(
+            self.deb_setting_dir)))
 
         # copy to appropriate location
         for script in mscripts:
