@@ -11,7 +11,10 @@ setup(
     version=__version__,
     packages=find_packages(),
     author='Sergey R.',
-    description='dependecies for debpackager projects',
+    url='https://github.com/urban48/debpackager',
+    license='MIT',
+    author_email='segrog@gmail.com',
+    description='debpackager package any project to debian package',
     entry_points={
         'console_scripts': [
             'debpackager=debpackager.main:main'
