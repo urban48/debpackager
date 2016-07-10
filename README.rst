@@ -1,3 +1,6 @@
+.. image:: https://circleci.com/gh/urban48/debpackager/tree/master.svg?style=svg
+    :target: https://circleci.com/gh/urban48/debpackager/tree/master
+
 Overview
 ========
 
