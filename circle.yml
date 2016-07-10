@@ -1,9 +1,8 @@
 machine:
-  python:
-    version: global 2.7.9 3.4.2
+
   environment:
     USER: test
 
 dependencies:
-  override:
+  pre:
     - sudo apt-get update; sudo apt-get install dh-make
