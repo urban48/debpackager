@@ -14,7 +14,7 @@ Main Features:
  * Greatly simplifies the packaging and deployment process. 
  * Package version management in SemVer standard (http://semver.org/) 
 
-What dose it do
+What does it do
 ===============
 Creates only debian binary packages right now.
 Do not really follow Debian packaging policy or all the packaging guidelines.
@@ -65,7 +65,7 @@ Must have `project.json <https://github.com/urban48/debpackager/wiki/conventions
 Documentation
 =============
 
-see `wiki <https://github.com/urban48/debpackager/wiki>`_
+See `wiki <https://github.com/urban48/debpackager/wiki>`_
 
 
 Contributing
