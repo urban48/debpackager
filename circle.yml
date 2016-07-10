@@ -5,5 +5,5 @@ machine:
     USER: test
 
 dependencies:
-  pre:
+  override:
     - sudo apt-get update; sudo apt-get install dh-make
