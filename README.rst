@@ -4,7 +4,7 @@
 Overview
 ========
 
-debpackager is a cli tool used for creating debain packages
+debpackager is a cli tool used for creating debian packages
 inspired by `fpm <https://github.com/jordansissel/fpm>`_ and `maven <https://maven.apache.org/i>`_
 
 Main Features:
@@ -19,16 +19,16 @@ Main Features:
 
 What does it do
 ===============
-Creates only debian binary packages right now.
+Creates debian binary packages.
 Do not really follow Debian packaging policy or all the packaging guidelines.
 Provides an easy way to configure, manage and create a deb package that can be deployed
 on Linux.
 
 
-Requirements
-============
+Environment
+===========
 * Python >=2.7
-* Works on Linux
+* Linux
 
 Dependencies
 ============
