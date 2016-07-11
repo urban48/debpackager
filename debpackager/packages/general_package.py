@@ -69,8 +69,7 @@ class GeneralPackage(object):
         deb_dependencies = self.extra_args.get('pom', {}) \
             .project.get('deb_dependencies')
         project = self.extra_args.get('pom', {}).project
-        for deb in project.get(
-                'debians', []):
+        for deb in project.get('debians', []):
             deb_name = deb.get('name', self.project_name)
             dpm = Dpm(project_path=self.project_path,
                       package_name=deb_name,
