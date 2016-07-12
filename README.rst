@@ -11,9 +11,8 @@ Main Features:
 
  * Provides easy control over project packaging process using configuration     
    file called project.json (like pom.xml in maven)
- * Easy addition of new packing policies for different project types and languages
- * Solves the problem of python projects need debian dependencies to run.  
- * Making your code a Linux compatible daemon with just few simple steps
+ * Solves the problem of python projects need debian dependencies to work.  
+ * Making your code a Linux daemon with just few simple steps.
  * Greatly simplifies the packaging and deployment process. 
  * Package version management in SemVer standard (http://semver.org/) 
 
@@ -24,6 +23,9 @@ Do not really follow Debian packaging policy or all the packaging guidelines.
 Provides an easy way to configure, manage and create a deb package that can be deployed
 on Linux.
 
+By adding `project.json <https://github.com/urban48/debpackager/wiki/conventions-and-usage#projectjson>`_ file to any project, debpackager will create debian out of it.
+
+If you have a python project you can set the type in the configuration to 'python', and debpackager will create and package virtualenv with your project out of your requirements.txt.
 
 Environment
 ===========
