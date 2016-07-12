@@ -18,7 +18,7 @@ Main Features:
 
 What does it do
 ===============
-Creates debian binary packages.
+Creates debian binary packages out of any project, no metter what language.
 Do not really follow Debian packaging policy or all the packaging guidelines.
 Provides an easy way to configure, manage and create a deb package that can be deployed
 on Linux.
