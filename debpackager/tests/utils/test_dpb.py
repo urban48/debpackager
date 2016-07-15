@@ -143,3 +143,41 @@ class TestDpb(object):
         init_file_path = self.dpb.debian_package_path + \
                          '/debian/ad-server.init'
         assert os.path.exists(init_file_path) is False
+
+    def test_add_default_description(self):
+        """ test that description is added"""
+        self.dpb._dh_make()
+        self.dpb._add_description()
+
+        control_file_path = self.dpb.debian_package_path + '/debian/control'
+
+        description_string = 'Description: test-proj Package'
+
+        with open(control_file_path, 'r') as inst_file:
+            assert description_string in inst_file.read()
+
+    def test_add_too_long_description(self):
+        """ test that too long description is discarded"""
+        self.dpb._dh_make()
+        self.dpb.description = 'very long description' * 100
+        self.dpb._add_description()
+
+        control_file_path = self.dpb.debian_package_path + '/debian/control'
+
+        description_string = 'Description: test-proj Package'
+
+        with open(control_file_path, 'r') as inst_file:
+            assert description_string in inst_file.read()
+
+    def test_custom_description(self):
+        """ test that custom description is added"""
+        self.dpb._dh_make()
+        self.dpb.description = 'custom description'
+        self.dpb._add_description()
+
+        control_file_path = self.dpb.debian_package_path + '/debian/control'
+
+        description_string = 'custom description'
+
+        with open(control_file_path, 'r') as inst_file:
+            assert description_string in inst_file.read()

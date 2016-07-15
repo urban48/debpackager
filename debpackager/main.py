@@ -8,7 +8,7 @@ from debpackager.utils.general import run_command
 from debpackager.utils.pom import Pom
 from debpackager.conf.log_conf import LOG_CONF
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 logger = logging.getLogger(__name__)
 
@@ -56,8 +56,6 @@ def main():
 
 def parse_arguments():
 
-    types = ['python', 'general']
-
     parser = argparse.ArgumentParser(description=
                                      'cli tool for creating debians',
                                      add_help=False)
@@ -86,7 +84,6 @@ def parse_arguments():
                        metavar='',
                        dest='project_type',
                        action='store',
-                       choices=types,
                        help='set project type, default: auto detect')
     build.add_argument('-p', '--path', metavar='', dest='project_path',
                        action='store', default=os.getcwd(),
