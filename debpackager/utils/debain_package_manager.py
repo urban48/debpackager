@@ -20,6 +20,7 @@ class Dpm(object):
                  package_version,
                  install_path,
                  dependencies=None,
+                 description=None,
                  excludes=None):
 
         self.project_path = project_path
@@ -27,6 +28,7 @@ class Dpm(object):
         self.package_version = package_version
         self.install_path = install_path
         self.dependencies = dependencies
+        self.description = description or '{} Package'.format(package_name)
         self.excludes = excludes or []
         self.deb_setting_dir = os.path.join(self.project_path,
                                             cfg.PROJECT_DEBIAN_SETTINGS_DIR)
@@ -45,6 +47,7 @@ class Dpm(object):
         self._set_exclude()
         self._add_maintainer_scripts()
         self._add_startup_script()
+        self._add_description()
         run_command('dpkg-buildpackage -uc -us -tc -rfakeroot')
         os.chdir(self.project_path)
 
@@ -79,7 +82,7 @@ class Dpm(object):
     def _add_deb_dependencies(self):
         """ adds deb dependencies to control file """
         if self.dependencies:
-            debian_dependencies = self._dependencies_to_debian_format(
+            debian_dependencies = self.dependencies_to_debian_format(
                 self.dependencies)
             dependencies_str = ', '.join(debian_dependencies)
 
@@ -142,8 +145,18 @@ class Dpm(object):
             return
         logger.warning('No start-up scrip was found')
 
+    def _add_description(self):
+        """ adds description to control file"""
+        if not self.description or not len(self.description) <= 60:
+            logger.warning('bad description, using default pattern')
+            self.description = '{} Package'.format(self.package_name)
+
+        sh.sed('-i', r'/^Description/c\\Description: {}'
+               .format(self.description),
+               self.debian_package_path + '/debian/control').wait()
+
     @staticmethod
-    def _dependencies_to_debian_format(dependencies):
+    def dependencies_to_debian_format(dependencies):
         """ reformat deb dependencies to format that debian can understand"""
         debian_dependencies = []
         for deb_name in dependencies:

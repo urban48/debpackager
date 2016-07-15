@@ -76,6 +76,7 @@ class GeneralPackage(object):
                       package_version=self.new_version,
                       install_path=deb.get('install_path'),
                       dependencies=deb_dependencies,
+                      description=deb.get('description'),
                       excludes=project.get('excludes', []))
 
             build_dir = dpm.build()
