@@ -1,5 +1,10 @@
-.. image:: https://circleci.com/gh/urban48/debpackager/tree/master.svg?style=svg
-    :target: https://circleci.com/gh/urban48/debpackager/tree/master
+    .. image:: https://circleci.com/gh/urban48/debpackager/tree/master.svg?style=svg
+        :target: https://circleci.com/gh/urban48/debpackager/tree/master
+        :alt: build
+        
+    .. image:: https://badge.fury.io/py/debpackager.svg
+        :target: https://badge.fury.io/py/debpackager
+        :alt: Latest Version
 
 Overview
 ========
