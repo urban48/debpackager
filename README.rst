@@ -1,8 +1,9 @@
-    .. image:: https://circleci.com/gh/urban48/debpackager/tree/master.svg?style=shield
+.. image:: https://circleci.com/gh/urban48/debpackager/tree/master.svg?style=shield
         :target: https://circleci.com/gh/urban48/debpackager/tree/master
-        :alt: build
-        
-    .. image:: https://badge.fury.io/py/debpackager.svg
+        :alt: build      
+       
+       
+.. image:: https://badge.fury.io/py/debpackager.svg
         :target: https://badge.fury.io/py/debpackager
         :alt: Latest Version
 
