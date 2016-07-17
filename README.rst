@@ -1,4 +1,4 @@
-    .. image:: https://circleci.com/gh/urban48/debpackager/tree/master.svg?style=svg
+    .. image:: https://circleci.com/gh/urban48/debpackager/tree/master.svg?style=shield
         :target: https://circleci.com/gh/urban48/debpackager/tree/master
         :alt: build
         
