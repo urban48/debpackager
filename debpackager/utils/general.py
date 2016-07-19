@@ -40,22 +40,27 @@ def get_new_version(extra_args):
 
 
 def run_command(command):
-    logger.debug('running command: {}'.format(command))
+
     if type(command) == list:
         command = " ".join(command)
+
+    logger.debug('running command: {}'.format(command))
     proc = Popen(command, stdout=PIPE, stderr=STDOUT, shell=True)
     while proc.poll() is None:
         line = proc.stdout.readline().strip()
         if line:
             logger.info(line)
 
+    proc.wait()
     stdo, erro = proc.communicate()
     if stdo:
         logger.info(stdo)
     if erro:
         logger.info(erro)
-    if proc.returncode != 0:
-        raise Exception('failed to run command, {}: {}'.format(stdo, command))
+    exit_code = proc.returncode
+    if exit_code != 0:
+        raise Exception('failed to run command, '
+                        '{} with exit code {}'.format(command, exit_code))
 
     return proc.returncode
 

@@ -7,7 +7,7 @@ import pytest
 from debpackager.utils.debain_package_manager import Dpm
 
 
-@pytest.mark.unitest
+@pytest.mark.unit
 class TestDpb(object):
     """
      unit tests for debian package builder module

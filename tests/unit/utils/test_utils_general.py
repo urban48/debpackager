@@ -10,7 +10,7 @@ from debpackager.utils import general
 import debpackager.packages.conf.configurations as cfg
 
 
-@pytest.mark.unitest
+@pytest.mark.unit
 class TestUtilsGeneral(object):
     def setup_method(self, method):
         self.tmp_dir = tempfile.mkdtemp()
