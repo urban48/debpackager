@@ -8,7 +8,7 @@ from debpackager.utils.general import run_command
 from debpackager.utils.pom import Pom
 from debpackager.conf.log_conf import LOG_CONF
 
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 
 logger = logging.getLogger(__name__)
 
@@ -124,30 +124,24 @@ def add_missing_params(args, pom):
     :return: modified args
     """
 
-    if 'project_path' not in args:
-        args.project_path = os.getcwd()
-
-    if not getattr(pom, 'project', {}):
-
-        if 'project_name' not in args:
-            args.project_name = os.path.basename(os.getcwd())
-
-        if 'project_type' not in args or not vars(args).get('project_type'):
-            args.project_type = get_project_type(args.project_path)
-
     if 'project_name' not in args:
         args.project_name = pom.project.get('name',
                                             os.path.basename(os.getcwd()))
 
-    if 'project_type' not in args or not vars(args).get('project_type'):
-        args.project_type = pom.project.get('type')
+    # if project_type is not defined try to fill from project.json
+    args.project_type = args.project_type or pom.project.get('type')
+
+    # try to guess the type, or go fall to default value
+
+    if getattr(args, 'project_type') is None:
+        args.project_type = get_project_type(args.project_path)
         if not args.project_type:
-            logger.error('project.json is missing type attribute. '
+            logger.error('could not determine the project type. '
                          'using general type as default')
-            pom.project['type'] = 'general'
             args.project_type = 'general'
 
     args.pom = pom
+
     return args
 
 
@@ -162,6 +156,7 @@ def get_project_type(project_path):
 
     if os.path.exists(os.path.join(project_path, 'requirements.txt')) and not \
        os.path.exists(os.path.join(project_path, 'setup.py')):
+
         return 'python'
 
     else:

@@ -21,7 +21,7 @@ setup(
         ]
     },
     install_requires=reqs,
-    tests_require=['pytest==2.9.2'],
+    tests_require=['pytest==2.9.2', 'pytest-pythonpath==0.7'],
     classifiers=[
         'Development Status :: 3 - Alpha',
 
@@ -38,6 +38,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
-    keywords='debian packaging  package daemon dh-make',
+    keywords='debian lin packaging package daemon dh-make',
 )

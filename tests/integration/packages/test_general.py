@@ -9,7 +9,7 @@ from debpackager.utils.pom import Pom
 from debpackager.packages.general.general import General
 
 
-@pytest.mark.unitest
+@pytest.mark.integration
 class TestUtilsGeneral(object):
 
     def setup_method(self, method):
