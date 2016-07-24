@@ -83,3 +83,8 @@ Contributing
 ============
 
 By participating in this project you agree to abide by its terms.
+
+
+.. image:: https://badges.gitter.im/urban48/debpackager.svg
+   :alt: Join the chat at https://gitter.im/urban48/debpackager
+   :target: https://gitter.im/urban48/debpackager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
