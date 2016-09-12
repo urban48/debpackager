@@ -33,6 +33,8 @@ By adding `project.json <https://github.com/urban48/debpackager/wiki/conventions
 
 If you have a python project you can set the type in the configuration to 'python', and debpackager will create and package virtualenv with your project out of your requirements.txt.
 
+supports custom `maintainer scrips <https://wiki.debian.org/MaintainerScripts>`_ and init/upstart, for making your project run as a linux service.  
+
 Environment
 ===========
 * Python >=2.7
