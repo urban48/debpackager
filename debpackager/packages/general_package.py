@@ -85,6 +85,8 @@ class GeneralPackage(object):
             # will be deleted if --no-clean flag is given
             self.extra_files.append('{}_{}.tar.gz'
                                     .format(deb_name, self.new_version))
+            self.extra_files.append('{}_{}.tar.xz'
+                                    .format(deb_name, self.new_version))
             self.extra_files.append('{}_{}_amd64.changes'
                                     .format(deb_name, self.new_version))
             self.extra_files.append('{}_{}.dsc'

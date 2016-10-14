@@ -72,7 +72,7 @@ def create_virtual_env(project_path, install_path):
         shutil.rmtree(ve_path)
     try:
         logger.info('creating virtual env')
-        virtualenv.create_environment(ve_path)
+        virtualenv.create_environment(ve_path, symlink=False)
     except Exception:
         logger.exception('failed to create virtualenv: ')
         raise Exception('failed to create virtualenv!')
