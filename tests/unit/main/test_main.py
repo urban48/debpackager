@@ -49,8 +49,7 @@ class TestMain(object):
         with pytest.raises(Exception) as excinfo:
             get_project_type('/bad/path')
 
-        assert excinfo.value.message == 'Could not find project path: ' \
-                                        '/bad/path'
+        assert str(excinfo.value) == 'Could not find project path: /bad/path'
 
     def test_add_missing_params_with_project_name(self):
         with open(self.tmp_dir + '/' + 'project.json', 'r+') as proj_file:
@@ -85,7 +84,7 @@ class TestMain(object):
         args['project_path'] = os.getcwd()
         args['project_type'] = None
         result = add_missing_params(args, pom)
-        assert result.project_type == 'python'
+        assert result.project_type == 'general'
 
     def test_add_missing_params_no_project_type_general(self):
         with open(self.tmp_dir + '/' + 'project.json', 'r+') as proj_file:

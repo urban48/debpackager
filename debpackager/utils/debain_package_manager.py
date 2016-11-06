@@ -33,14 +33,15 @@ class Dpm(object):
         self.deb_setting_dir = os.path.join(self.project_path,
                                             cfg.PROJECT_DEBIAN_SETTINGS_DIR)
         self.debian_package_path = os.path.join(project_path,
-                                                cfg.BUILD_DEBIAN_DIR)
+                                                cfg.BUILD_DEBIAN_DIR + '_' +
+                                                package_name)
         if os.path.exists(self.debian_package_path):
             shutil.rmtree(self.debian_package_path)
+
         os.mkdir(self.debian_package_path)
         os.chdir(self.debian_package_path)
 
-    def build(self):
-        """ builds debian packages"""
+    def generate(self):
         self._dh_make()
         self._create_install_file()
         self._add_deb_dependencies()
@@ -48,10 +49,16 @@ class Dpm(object):
         self._add_maintainer_scripts()
         self._add_startup_script()
         self._add_description()
-        run_command('dpkg-buildpackage -uc -us -tc -rfakeroot')
-        os.chdir(self.project_path)
 
-        return cfg.BUILD_DEBIAN_DIR
+        return self.debian_package_path
+
+    @staticmethod
+    def build(build_dir):
+        """ builds debian packages"""
+        os.chdir(build_dir)
+        run_command('dpkg-buildpackage -uc -us -tc -rfakeroot')
+        # os.chdir(self.project_path)
+
 
     def _dh_make(self):
         """ creates a debian subdirectory with initial files that are needed
