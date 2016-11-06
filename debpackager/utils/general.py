@@ -49,7 +49,7 @@ def run_command(command):
     while proc.poll() is None:
         line = proc.stdout.readline().strip()
         if line:
-            logger.info(line)
+            logger.info(line.decode('ascii'))
 
     proc.wait()
     stdo, erro = proc.communicate()
@@ -65,21 +65,34 @@ def run_command(command):
     return proc.returncode
 
 
-def create_virtual_env(project_path, install_path):
+def create_virtual_env(project_path, install_path, ve_args):
     # remove existing virtual env if exists
     ve_path = os.path.join(project_path, cfg.VIRTUAL_ENV_PATH)
     if os.path.exists(ve_path):
         shutil.rmtree(ve_path)
     try:
         logger.info('creating virtual env')
-        virtualenv.create_environment(ve_path)
+        sys.argv = ['']
+        if '--always-copy' not in ve_args:
+            sys.argv.append('--always-copy')
+        if '--no-wheel' not in ve_args:
+            sys.argv.append('--no-wheel')
+        sys.argv.extend(ve_args)
+        sys.argv.append(ve_path)
+        try:
+            virtualenv.main()
+        except SystemExit as sysext:
+            if sysext.code != 0:
+                raise SystemExit(sysext)
     except Exception:
         logger.exception('failed to create virtualenv: ')
         raise Exception('failed to create virtualenv!')
+
     try:
         logger.info('installing requirements for virtualenv')
         # update pip to latest version
-        run_command(['{}/ve/bin/pip'.format(project_path),
+        run_command(['{}/{}/bin/pip'.format(project_path,
+                                            cfg.VIRTUAL_ENV_PATH),
                      'install',
                      '-U',
                      'pip'])
@@ -88,7 +101,8 @@ def create_virtual_env(project_path, install_path):
             logger.warning('requirements.txt not found')
             return ve_path
 
-        run_command(['{}/ve/bin/pip'.format(project_path),
+        run_command(['{}/{}/bin/pip'.format(project_path,
+                                            cfg.VIRTUAL_ENV_PATH),
                      'install',
                      '-r',
                      '{}/requirements.txt'.format(project_path)])
@@ -164,3 +178,7 @@ def install_deb_dependencies(extra_args):
     command = ['sudo', 'apt-get', 'install', '-y', '--force-yes']
     command.extend(debs_to_install)
     run_command(command)
+
+
+if __name__ == '__main__':
+    create_virtual_env('/tmp', '/tmp/proj', [ '--always-copy', '-p', 'python2.7'])

@@ -16,7 +16,8 @@ class Python(GeneralPackage):
 
         for debian in self.extra_args.get('pom').project.get('debians', []):
             install_path = debian.get('install_path')
-            create_virtual_env(self.project_path, install_path)
+            ve_args = debian.get('ve_args', [])
+            create_virtual_env(self.project_path, install_path, ve_args)
             super(Python, self).build()
 
             # virtualenv dir will be deleted if --no-clean flag is given

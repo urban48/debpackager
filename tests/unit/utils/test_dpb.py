@@ -25,7 +25,8 @@ class TestDpb(object):
         """ teardown any state that was previously setup with a setup_method
         call.
         """
-        shutil.rmtree(self.tmpdir)
+        if os.path.exists(self.tmpdir):
+            shutil.rmtree(self.tmpdir)
 
     def test_dh_make(self):
         """ Test if method created debian folder with default files"""
