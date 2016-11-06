@@ -11,7 +11,7 @@ Overview
 ========
 
 debpackager is a cli tool used for creating debian packages
-inspired by `fpm <https://github.com/jordansissel/fpm>`_ and `maven <https://maven.apache.org/i>`_
+inspired by `fpm <https://github.com/jordansissel/fpm>`_ and `maven <https://maven.apache.org/>`_
 
 Main Features:
 
@@ -30,7 +30,7 @@ Do not really follow Debian packaging policy or all the packaging guidelines.
 Provides an easy way to configure, manage and create a deb package that can be deployed
 on Linux.
 
-By adding `project.json <https://github.com/urban48/debpackager/wiki/conventions-and-usage#projectjson>`_ file to any project, debpackager will create debian out of it.
+By adding `project.json <https://github.com/urban48/debpackager/wiki/conventions#projectjson>`_ file to any project, debpackager will create debian out of it.
 
 If you have a python project you can set the type in the configuration to 'python', and debpackager will create and package virtualenv with your project out of your requirements.txt.
 
