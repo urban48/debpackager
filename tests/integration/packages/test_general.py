@@ -1,8 +1,9 @@
 import json
 import os
+import subprocess
 import tempfile
+import shutil
 
-from sh import mkdir
 import pytest
 
 from debpackager.utils.pom import Pom
@@ -15,9 +16,9 @@ class TestUtilsGeneral(object):
     def setup_method(self, method):
         self.tmp_dir = tempfile.mkdtemp()
 
-        mkdir(self.tmp_dir + '/' + 'folderA').wait()
-        mkdir(self.tmp_dir + '/' + 'folderB').wait()
-        mkdir(self.tmp_dir + '/' + 'debian').wait()
+        os.makedirs(self.tmp_dir + '/' + 'folderA')
+        os.makedirs(self.tmp_dir + '/' + 'folderB')
+        os.makedirs(self.tmp_dir + '/' + 'debian')
         with open(self.tmp_dir + '/' + 'project.json', 'w') as f:
             project_conf = '''{
                   "version": "0.1.0",
@@ -30,6 +31,9 @@ class TestUtilsGeneral(object):
             f.write(project_conf)
         self.pom = Pom(project_path=self.tmp_dir)
         os.chdir(self.tmp_dir)
+
+    def teardown_method(self, method):
+        shutil.rmtree(self.tmp_dir)
 
     def test_build(self):
         gp = General({'project_path': self.tmp_dir,
@@ -51,7 +55,8 @@ class TestUtilsGeneral(object):
                       'project_type': 'general',
                       'pom': pom})
         gp.build()
-        result = os.popen('dpkg -I test-proj_0.1.0_all.deb').read()
+        cmd = 'dpkg -I {}/test-proj_0.1.0_all.deb'.format(self.tmp_dir)
+        result = subprocess.check_output(cmd, shell=True)
         assert 'Depends: python-pip (>= 1.5.4-1)' in result
 
     def test_build_with_exclude(self):
@@ -66,7 +71,8 @@ class TestUtilsGeneral(object):
                       'project_type': 'general',
                       'pom': pom})
         gp.build()
-        result = os.popen('dpkg -c test-proj_0.1.0_all.deb').read()
+        cmd = 'dpkg -c {}/test-proj_0.1.0_all.deb'.format(self.tmp_dir)
+        result = subprocess.check_output(cmd, shell=True)
         assert 'folderA' in result
         assert 'folderB' not in result
 
@@ -82,7 +88,8 @@ class TestUtilsGeneral(object):
                       'project_type': 'general',
                       'pom': pom})
         gp.build()
-        result = os.popen('dpkg -I test-proj_0.1.0_all.deb').read()
+        cmd = 'dpkg -I {}/test-proj_0.1.0_all.deb'.format(self.tmp_dir)
+        result = subprocess.check_output(cmd, shell=True)
         assert 'Description: test description package' in result
 
     def test_build_without_description(self):
@@ -91,7 +98,8 @@ class TestUtilsGeneral(object):
                       'project_type': 'general',
                       'pom': pom})
         gp.build()
-        result = os.popen('dpkg -I test-proj_0.1.0_all.deb').read()
+        cmd = 'dpkg -I {}/test-proj_0.1.0_all.deb'.format(self.tmp_dir)
+        result = subprocess.check_output(cmd, shell=True)
         assert 'Description: test-proj Package' in result
 
     def test_build_with_long_description(self):
@@ -106,5 +114,6 @@ class TestUtilsGeneral(object):
                       'project_type': 'general',
                       'pom': pom})
         gp.build()
-        result = os.popen('dpkg -I test-proj_0.1.0_all.deb').read()
+        cmd = 'dpkg -I {}/test-proj_0.1.0_all.deb'.format(self.tmp_dir)
+        result = subprocess.check_output(cmd, shell=True)
         assert 'Description: test-proj Package' in result

@@ -1,15 +1,18 @@
-
+Version 0.1.0
+-------------
+ Initial release
 
 Version 0.2.0
 -------------
 - Added support to project.json to supply
-  custom interpreter for virtualenv creation in
-  python project type
+  custom virtualenv arguments.
 
-- Added new option to the cli tool, for only generating debian files,
+- Added new option to the cli tool, to only generate debian files,
   without building the package
 
-- Added new option to the cli tool, to generate debain package
-  based on existing files
+- Now the build command will either build from existing build files
+  if they exists, or generate new build files from scratch and then build
 
 - Minor general fixes and cleanup
+
+- More tests

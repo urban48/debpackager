@@ -2,7 +2,6 @@ import os
 import shutil
 import tempfile
 
-from sh import mkdir
 import pytest
 
 from debpackager.utils.pom import Pom
@@ -15,9 +14,9 @@ class TestUtilsGeneral(object):
     def setup_method(self, method):
         self.tmp_dir = tempfile.mkdtemp()
 
-        mkdir(self.tmp_dir + '/' + 'folderA').wait()
-        mkdir(self.tmp_dir + '/' + 'folderB').wait()
-        mkdir(self.tmp_dir + '/' + 'debian').wait()
+        os.makedirs(self.tmp_dir + '/' + 'folderA')
+        os.makedirs(self.tmp_dir + '/' + 'folderB')
+        os.makedirs(self.tmp_dir + '/' + 'debian')
         with open(self.tmp_dir + '/' + 'project.json', 'w') as f:
             project_conf = '''{
                   "version": "0.1.0",
@@ -58,21 +57,32 @@ class TestUtilsGeneral(object):
                                      'custom_version': '2.2'})
 
     def test_create_virtual_env_path(self):
-        ve_path = general.create_virtual_env(self.tmp_dir, '/tmp/install_path')
+        ve_path = general.create_virtual_env(self.tmp_dir,
+                                             '/tmp/install_path', [])
         assert ve_path == self.tmp_dir + '/' + cfg.VIRTUAL_ENV_PATH
-        shutil.rmtree(ve_path)
 
     def test_create_virtual_env_requirements(self):
         with open(self.tmp_dir + '/' + 'requirements.txt', 'w') as f:
-            f.write('pytest')
-        ve_path = general.create_virtual_env(self.tmp_dir, '/tmp/install_path')
-        assert os.path.exists('{}/bin/py.test'.format(ve_path)) == True
-        shutil.rmtree(ve_path)
+            f.write('debpackager')
+        ve_path = general.create_virtual_env(self.tmp_dir,
+                                             '/tmp/install_path', [])
+        print(ve_path)
+        assert os.path.exists('{}/bin/debpackager'.format(ve_path)) == True
+
+    def test_create_virtual_env_custom_interpreter(self):
+        result = general.create_virtual_env(self.tmp_dir, self.tmp_dir,
+                                            ['-p', 'python2.7'])
+        assert result == self.tmp_dir + '/ve'
+
+    def test_create_virtual_env_ve_args_with_hardcoded_setting(self):
+        result = general.create_virtual_env(self.tmp_dir, self.tmp_dir,
+                                            ['--always-copy'])
+        assert result == self.tmp_dir + '/ve'
 
     def test_fixup_scripts(self):
         with open(self.tmp_dir + '/' + 'requirements.txt', 'w') as f:
             f.write('pytest')
-        general.create_virtual_env(self.tmp_dir, '/tmp/install_path')
+        general.create_virtual_env(self.tmp_dir, '/tmp/install_path', [])
         with open(self.tmp_dir + '/ve/bin/py.test', 'rb') as f:
             lines = f.read().decode('utf-8').splitlines()
             lines[0].strip()

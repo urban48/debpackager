@@ -1,9 +1,12 @@
 import logging
 import os
 
-from debpackager.packages.conf import configurations as cfg
+
 from debpackager.utils.debain_package_manager import Dpm
 from debpackager.utils.general import get_new_version
+from debpackager.packages.conf import configurations as cfg
+from debpackager.conf import configuratoin as global_cfg
+
 
 logger = logging.getLogger(__name__)
 
@@ -62,13 +65,27 @@ class GeneralPackage(object):
 
         """
         self.new_version = get_new_version(self.extra_args)
-        self._create_debians()
+        generated_builds = ['{}/{}'.format(self.project_path, build) for
+                            build in os.listdir(self.project_path) if
+                            build.startswith(global_cfg.BUILD_DEBIAN_DIR)]
+        if not generated_builds:
+            generated_builds = self.generate()
+        for build in generated_builds:
+            Dpm.build(build)
 
-    def _create_debians(self):
+        # leftovers after debian creation
+        # will be deleted if --no-clean flag is given
+        self.extra_files.extend(['*.tar.gz', '*.tar.xz', '*amd64.changes',
+                                '*.dsc'])
+        self.extra_files.extend(generated_builds)
+
+    def generate(self):
+        self.new_version = get_new_version(self.extra_args)
 
         deb_dependencies = self.extra_args.get('pom', {}) \
             .project.get('deb_dependencies')
         project = self.extra_args.get('pom', {}).project
+        generated_builds = []
         for deb in project.get('debians', []):
             deb_name = deb.get('name', self.project_name)
             dpm = Dpm(project_path=self.project_path,
@@ -79,17 +96,5 @@ class GeneralPackage(object):
                       description=deb.get('description'),
                       excludes=project.get('excludes', []))
 
-            build_dir = dpm.build()
-
-            # leftovers after debian creation
-            # will be deleted if --no-clean flag is given
-            self.extra_files.append('{}_{}.tar.gz'
-                                    .format(deb_name, self.new_version))
-            self.extra_files.append('{}_{}.tar.xz'
-                                    .format(deb_name, self.new_version))
-            self.extra_files.append('{}_{}_amd64.changes'
-                                    .format(deb_name, self.new_version))
-            self.extra_files.append('{}_{}.dsc'
-                                    .format(deb_name, self.new_version))
-            self.extra_files.append(build_dir)
-
+            generated_builds.append(dpm.generate())
+        return generated_builds
