@@ -1,6 +1,22 @@
 Version 0.1.0
 -------------
- Initial release
+- Initial release
+
+Version 0.1.1
+-------------
+- tox support added
+
+- Minor syntax fixes
+
+Version 0.1.2
+-------------
+- Circle CI support added
+
+- readme updated
+
+- support for adding description to debain package
+
+- more tests added
 
 Version 0.2.0
 -------------
