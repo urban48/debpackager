@@ -17,8 +17,9 @@ Main Features:
 
  * Provides easy control over project packaging process using configuration     
    file called project.json (like pom.xml in maven)
+ * Debian files generation only, for even more customized builds.
  * Solves the problem of python projects need debian dependencies to work.  
- * Making your code a Linux daemon with just few simple steps.
+ * Making your code run as a Linux daemon with just few simple steps.
  * Greatly simplifies the packaging and deployment process. 
  * Package version management in SemVer standard (http://semver.org/) 
 
@@ -58,7 +59,7 @@ Install
 Usage
 =====
 
-Must have `project.json <https://github.com/urban48/debpackager/wiki/conventions-and-usage#projectjson>`_ at your project root directory
+Must have `project.json <https://github.com/urban48/debpackager/wiki/conventions#projectjson>`_ at your project root directory
 
 **build**
 
@@ -74,6 +75,18 @@ Must have `project.json <https://github.com/urban48/debpackager/wiki/conventions
       -t , --type           set project type, default: auto detect
       -p , --path           set path to project, default: current location
       -v , --version        set version manually
+
+
+**generate**
+
+.. code-block:: shell
+
+    usage: debpackager generate [-h] [-p] [-v]
+
+    optional arguments:
+      -h, --help       show this help message and exit
+      -p , --path      set path to project, default: current location
+      -v , --version   set version manually
 
 Documentation
 =============

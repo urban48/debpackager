@@ -1,0 +1,44 @@
+v0.1.0
+------
+- Initial release
+
+
+Version 0.1.1
+-------------
+- tox support added
+
+- Minor syntax fixes
+
+
+v0.1.2
+------
+- Circle CI support added
+
+- readme updated
+
+- support for adding description to debain package
+
+- more tests added
+
+
+v0.1.3
+------
+- Minor cleanup
+
+- more tests added
+
+
+v0.2.0
+------
+- Added support to project.json to supply
+  custom virtualenv arguments.
+
+- Added new option to the cli tool, to only generate debian files,
+  without building the package
+
+- Now the build command will either build from existing build files
+  if they exists, or generate new build files from scratch and then build
+
+- Minor general fixes and cleanup
+
+- More tests

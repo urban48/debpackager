@@ -1,5 +1,6 @@
 import os
 import sys
+import glob
 import logging
 import argparse
 from logging.config import dictConfig
@@ -8,7 +9,7 @@ from debpackager.utils.general import run_command
 from debpackager.utils.pom import Pom
 from debpackager.conf.log_conf import LOG_CONF
 
-__version__ = '0.1.3'
+__version__ = '0.2.0'
 
 logger = logging.getLogger(__name__)
 
@@ -37,20 +38,20 @@ def main():
             project_args['project_type']),
             project_args['project_type'].capitalize())(project_args)
 
-        if project_args['action'] == 'build':
+        if project_args['cmd'] == 'build':
             logger.info('Using package version: {}'.format(__version__))
 
         # execute the action
-        getattr(package, project_args['action'])()
+        getattr(package, project_args['cmd'])()
     except Exception as exp:
-        logger.error(u"ERROR: {}\n".format(exp))
+        logger.exception(u"ERROR: {}\n".format(exp))
         exit_code = 1
     finally:
-        if package and args.clean:
+        if package and args.cmd == 'build' and args.clean:
             for item in package.extra_files:
                 path_to_delete = os.path.join(args.project_path, item)
-                if os.path.exists(path_to_delete):
-                    run_command(['rm', '-rf', path_to_delete])
+                for path in glob.glob(path_to_delete):
+                    run_command(['rm', '-rf', path])
         sys.exit(exit_code)
 
 
@@ -59,14 +60,19 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description=
                                      'cli tool for creating debians',
                                      add_help=False)
+    # parser.add_argument('--generate-only', metavar='',
+    #                     help='Only generate debian files,\n'
+    #                          'Without building the package',
+    #                     dest='generate_only')
     parser.add_argument('-v', '--version', help='show version',
                         action='version', version=__version__)
     parser.add_argument('-h', '--help', action=_HelpAction,
                         help='show help')
 
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(dest='cmd')
 
     build = subparsers.add_parser('build')
+    subparsers.required = True
     build.set_defaults(action='build')
     build.add_argument('--install-dependencies',
                        dest='install_dependencies',
@@ -91,6 +97,14 @@ def parse_arguments():
                             'default: current location')
     build.add_argument('-v', '--version', metavar='', dest='custom_version',
                        help='set version manually', action='store')
+
+    generate = subparsers.add_parser('generate')
+    generate.add_argument('-p', '--path', metavar='', dest='project_path',
+                          action='store', default=os.getcwd(),
+                          help='set path to project, '
+                          'default: current location')
+    generate.add_argument('-v', '--version', metavar='', dest='custom_version',
+                          help='set version manually', action='store')
 
     return parser.parse_args()
 
@@ -129,7 +143,8 @@ def add_missing_params(args, pom):
                                             os.path.basename(os.getcwd()))
 
     # if project_type is not defined try to fill from project.json
-    args.project_type = args.project_type or pom.project.get('type')
+    if not hasattr(args, 'project_type'):
+        args.project_type = pom.project.get('type')
 
     # try to guess the type, or go fall to default value
 
