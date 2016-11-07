@@ -28,7 +28,7 @@ v0.1.3
 - more tests added
 
 
-v0.2.0
+v0.2.1
 ------
 - Added support to project.json to supply
   custom virtualenv arguments.
@@ -42,3 +42,10 @@ v0.2.0
 - Minor general fixes and cleanup
 
 - More tests
+
+v0.2.2
+------
+
+- Small updates to setup.py
+
+- Fixed issue of disappearing README at pypi
