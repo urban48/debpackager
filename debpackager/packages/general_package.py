@@ -94,7 +94,7 @@ class GeneralPackage(object):
                       install_path=deb.get('install_path'),
                       dependencies=deb_dependencies,
                       description=deb.get('description'),
-                      excludes=project.get('excludes', []))
+                      excludes=deb.get('excludes', []))
 
             generated_builds.append(dpm.generate())
         return generated_builds

@@ -73,10 +73,9 @@ def create_virtual_env(project_path, install_path, ve_args):
     try:
         logger.info('creating virtual env')
         sys.argv = ['']
-        if '--always-copy' not in ve_args:
-            sys.argv.append('--always-copy')
         if '--no-wheel' not in ve_args:
             sys.argv.append('--no-wheel')
+
         sys.argv.extend(ve_args)
         sys.argv.append(ve_path)
         try:

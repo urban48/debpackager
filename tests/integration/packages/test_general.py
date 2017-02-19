@@ -23,9 +23,8 @@ class TestUtilsGeneral(object):
             project_conf = '''{
                   "version": "0.1.0",
                   "type": "general",
-                  "debians": [{"name":"test-proj", "install_path": "/opt/test-proj"}],
-                  "deb_dependencies" : [],
-                  "excludes" : []
+                  "debians": [{"name":"test-proj", "install_path": "/opt/test-proj", "excludes" : []}],
+                  "deb_dependencies" : []
                 }
                 '''
             f.write(project_conf)
@@ -62,7 +61,7 @@ class TestUtilsGeneral(object):
     def test_build_with_exclude(self):
         with open(self.tmp_dir + '/' + 'project.json', 'r') as pjf:
             j = json.loads(pjf.read())
-            j['excludes'].append('folderB')
+            j['debians'][0]['excludes'].append('folderB')
             with open(self.tmp_dir + '/' + 'project.json', 'w') as tkw:
                 tkw.write(json.dumps(j))
 
