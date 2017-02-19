@@ -30,7 +30,8 @@ class TestUtilsGeneral(object):
         os.chdir(self.tmp_dir)
 
     def teardown_method(self, method):
-        shutil.rmtree(self.tmp_dir)
+        # shutil.rmtree(self.tmp_dir)
+        pass
 
     def test_get_new_version(self):
         version = general.get_new_version({'pom': self.pom})
@@ -60,14 +61,6 @@ class TestUtilsGeneral(object):
         ve_path = general.create_virtual_env(self.tmp_dir,
                                              '/tmp/install_path', [])
         assert ve_path == self.tmp_dir + '/' + cfg.VIRTUAL_ENV_PATH
-
-    def test_create_virtual_env_requirements(self):
-        with open(self.tmp_dir + '/' + 'requirements.txt', 'w') as f:
-            f.write('debpackager')
-        ve_path = general.create_virtual_env(self.tmp_dir,
-                                             '/tmp/install_path', [])
-        print(ve_path)
-        assert os.path.exists('{}/bin/debpackager'.format(ve_path)) == True
 
     def test_create_virtual_env_custom_interpreter(self):
         result = general.create_virtual_env(self.tmp_dir, self.tmp_dir,
