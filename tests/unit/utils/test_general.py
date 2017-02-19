@@ -30,8 +30,7 @@ class TestUtilsGeneral(object):
         os.chdir(self.tmp_dir)
 
     def teardown_method(self, method):
-        # shutil.rmtree(self.tmp_dir)
-        pass
+        shutil.rmtree(self.tmp_dir)
 
     def test_get_new_version(self):
         version = general.get_new_version({'pom': self.pom})
